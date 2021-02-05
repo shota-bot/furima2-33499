@@ -8,6 +8,7 @@ class User < ApplicationRecord
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
   NAME_REGEX = /\A[ぁ-んァ-ヶ一-龥々]/.freeze
   NAME_KANA_REGEX = /\A[ァ-ヶー－]+\z/.freeze
+  
   with_options presence: true do
     validates :nickname
     validates :birthday
