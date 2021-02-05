@@ -1,24 +1,72 @@
 # README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+<!-- ユーザー管理 -->
+## users テーブル
+| Column             | Type   | Option      |
+| -------------------| -------| ----------- |
+| nickname           | string | null: false |
+| email              | string | null: false |
+| encrypted_password | string | null: false |
+| last_name          | string | null: false |
+| first_name         | string | null: false |
+| last_name_kana     | string | null: false |
+| first_name_kana    | string | null: false |
+| birthday           | date   | null: false |
 
-Things you may want to cover:
+## Association
+- has_many :items
+- has_many :orders
+- has_many :comments
+- has_many :likes
+- has_many :reports
 
-* Ruby version
 
-* System dependencies
+<!-- 住所 -->
+## addresses テーブル
+| Column         | Type       | Option                         |
+| -------------- | ---------- | ------------------------------ |
+| postal_code    | string     | null: false                    |
+| prefecture_id  | integer    | null: false                    |
+| city           | string     | null: false                    |
+| house_num      | string     | null: false                    |
+| building       | string     |                                |
+| phone_num      | string     | null: false                    |
+| order          | references | null: false, foreign_key: true |
 
-* Configuration
+## Association
+- belongs_to :order
 
-* Database creation
+<!-- 出品管理 -->
+## items テーブル
+| Column         | Type       | Option                         |
+| -------------- | ---------- | ------------------------------ |
+| name           | string     | null: false                    |
+| text           | text       | null: false                    |
+| postage_id     | integer    | null: false                    |
+| prefectures_id | integer    | null: false                    |
+| day_id         | integer    | null: false                    |
+| price          | integer    | null: false                    |
+| user           | references | null: false, foreign_key: true |
+| category_id    | integer    | null: false                    |
+| status_id      | integer    | null: false                    |
 
-* Database initialization
+## Association
+- belongs_to :user
+- has_many :comments
+- has_many :likes
+- has_many :reports
+- has_one :order
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+<!-- 購入管理 -->
+## orders テーブル
+| Column  | Type       | Option                         |
+| ------- | ---------- | ------------------------------ |
+| user    | references | null: false, foreign_key: true |
+| item    | references | null: false, foreign_key: true |
 
-* Deployment instructions
-
-* ...
+## Association
+- belongs_to :user
+- belongs_to :item
+- has_one :address
